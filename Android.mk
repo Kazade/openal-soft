@@ -3,8 +3,9 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := openal
+LOCAL_LDLIBS := -llog
 
-AL_SOURCES := \
+LOCAL_SRC_FILES := \
   $(LOCAL_PATH)/OpenAL/Alc/android.c              \
   $(LOCAL_PATH)/OpenAL/OpenAL32/alAuxEffectSlot.c \
   $(LOCAL_PATH)/OpenAL/OpenAL32/alBuffer.c        \
@@ -37,11 +38,11 @@ LOCAL_SRC_FILES := $(LOCAL_SRC_FILES:$(LOCAL_PATH)/%=%)
 LOCAL_C_INCLUDES := \
   $(LOCAL_PATH)/OpenAL \
   $(LOCAL_PATH)/OpenAL/include \
-  $(LOCAL_PATH)/OpenAL/OpenAL32/Include \
+  $(LOCAL_PATH)/OpenAL/OpenAL32/Include
 
 
-LOCAL_CFLAGS += \
-  -DAL_ALEXT_PROTOTYPES \
+LOCAL_CFLAGS += -DAL_ALEXT_PROTOTYPES -DVERDE_USE_REAL_FILE_IO -DANDROID "-DRELEASE_LOG(...)=do{}while(0);"
+LOCAL_CFLAGS += -fpic -ffunction-sections -funwind-tables -fstack-protector -fno-short-enums -DHAVE_GCC_VISIBILITY -O3
 
 MAX_SOURCES_LOW ?= 4
 MAX_SOURCES_START ?= 8
